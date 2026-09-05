@@ -53,6 +53,8 @@ No database, CMS, authentication, backend service, analytics, environment variab
 
 ## Next phases
 
+The [Concept & Operating Model Matrix](docs/strategy/concept-operating-model-matrix.md) is the authoritative definition of the seven Tskaltubo scenarios and their service building blocks. All scenarios remain hypotheses; the matrix is a strategy document, with no runtime scenario presets or financial assumptions yet.
+
 Research/input → business concepts and financial model → complete UI → substantive translations and review → full validation → deployment.
 
 See [research standards](docs/research-standard.md), [methodology](docs/methodology.md), [financial-model contract](docs/financial-model.md) and [deployment notes](docs/deployment.md).
