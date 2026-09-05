@@ -1,35 +1,58 @@
-# Tskaltubo
+# Tskaltubo Sanatorium Opportunity Explorer
 
-Tskaltubo is a historic spa town in the Imereti region of western Georgia, known for its mineral waters, large central park, and distinctive network of Soviet-era sanatoriums.
+A research framework for examining Tskaltubo sanatorium properties, redevelopment concepts and target markets independently.
 
-During the 20th century, Tskaltubo developed into one of the best-known balneological resorts in the region. Its sanatoriums combined accommodation, medical treatment, rehabilitation, leisure, and monumental architecture. Many of these buildings later fell into partial or complete disuse, leaving a unique concentration of large historic properties with very different conditions, ownership structures, and redevelopment prospects.
+**Status: Phase 1 — repository skeleton only.** All research datasets are empty. The map and calculator are placeholders. There are no property assessments, financial assumptions, photographs or deployments.
 
-## Purpose of this repository
+## Run locally
 
-This repository collects research and working material on Tskaltubo and its former sanatoriums. It is intended as a structured place to examine:
+Use a supported Node.js LTS release (Node 22.13+ recommended) and npm.
 
-- the history and development of Tskaltubo as a spa town;
-- individual sanatoriums, their architecture, size, condition, and current status;
-- ownership, cadastral, auction, and public-registry information;
-- rehabilitation and redevelopment requirements;
-- indicative acquisition, renovation, and operating costs;
-- possible future uses, including hospitality, rehabilitation, health tourism, senior living, and assisted living;
-- infrastructure, accessibility, healthcare connections, and the wider Imereti region;
-- public redevelopment plans, investment initiatives, and market developments.
+```sh
+npm ci
+npm run dev
+```
 
-## Approach
+Open <http://localhost:3000>. `/` redirects to `/de`.
 
-Information in this repository may come from public registers, government material, auction documents, official statistics, media reports, field reports, maps, historical sources, and financial scenario modelling.
+```sh
+npm run typecheck
+npm run lint
+npm run check
+npm run build
+npm start
+```
 
-Where possible, the repository distinguishes between:
+`check` runs route type generation, strict TypeScript checking and ESLint. `build` verifies production compilation and static generation. No financial test suite is installed because formulas are deliberately absent.
 
-- **verified legal or registry information**;
-- **historical or indicative pricing and investment data**;
-- **reported current conditions**;
-- **assumptions used for scenario analysis**.
+## Routes
 
-Because ownership, pricing, building condition, and redevelopment plans can change, time-sensitive information should always be checked against the latest available official sources before being relied upon.
+Each of `/de`, `/en` and `/ka` has a home page plus `/sanatoriums`, `/compare`, `/scenarios` and `/methodology`. The `/sanatoriums/[slug]` route is ready for researched properties; the empty inventory means every property slug currently returns not found. Unsupported locales also return not found.
 
-## Status
+Language switching preserves the page path. Georgian structural copy is marked as awaiting native review.
 
-This is an exploratory research repository. It is intended to develop over time as additional information on Tskaltubo, its sanatoriums, and their redevelopment potential becomes available.
+## Structure and boundaries
+
+| Location | Responsibility |
+| --- | --- |
+| `src/app/` | Locale routes, layouts and placeholder pages |
+| `src/components/` | Layout, property, comparison, scenario, finance and map UI |
+| `src/types/` | Property, evidence, concept and finance contracts |
+| `src/data/` | Empty typed research/scenario collections |
+| `src/data/translations/` | Structural UI copy and shared dictionary shape |
+| `src/lib/` | Locale/evidence helpers, constants and finance interface |
+| `research/` | Working property, market, legal and source research |
+| `public/` | Reserved image/map assets; no photographs |
+| `docs/` | Standards, methodology, financial contract and deployment notes |
+
+Facts are language-neutral and reference evidence. Narratives are separate. Evidence categories do not imply verification status. Current evidence requires an explicit verification date; missing facts remain unknown. Business concepts do not classify the asset itself. Scenario edits must never mutate property facts.
+
+The finance entry point returns `notImplemented`, never fabricated zero results. The map loads no provider or coordinates. Only navigation needs a client component; placeholder content renders on the server.
+
+No database, CMS, authentication, backend service, analytics, environment variables or deployment configuration are required.
+
+## Next phases
+
+Research/input → business concepts and financial model → complete UI → substantive translations and review → full validation → deployment.
+
+See [research standards](docs/research-standard.md), [methodology](docs/methodology.md), [financial-model contract](docs/financial-model.md) and [deployment notes](docs/deployment.md).
