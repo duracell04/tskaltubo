@@ -4,8 +4,10 @@ export type ResearchDate =
   | { precision: "month"; value: string }
   | { precision: "day"; value: string };
 
-export type EvidenceCategory = "official" | "market" | "field" | "assumption";
-export type EvidenceStatus = "current" | "historical" | "reported" | "unverified" | "unknown";
+export type EvidenceCategory =
+  "official" | "market" | "field" | "assumption" | "derived" | "unknown";
+export type EvidenceStatus =
+  "current" | "historical" | "reported" | "unverified" | "unknown";
 
 export interface Source {
   id: string;
@@ -27,10 +29,17 @@ interface EvidenceBase {
   locator: string | null;
 }
 
-export type Evidence = EvidenceBase & (
-  | { status: "current"; verifiedAt: Extract<ResearchDate, { precision: "day" }> }
-  | { status: Exclude<EvidenceStatus, "current">; verifiedAt: ResearchDate | null }
-);
+export type Evidence = EvidenceBase &
+  (
+    | {
+        status: "current";
+        verifiedAt: Extract<ResearchDate, { precision: "day" }>;
+      }
+    | {
+        status: Exclude<EvidenceStatus, "current">;
+        verifiedAt: ResearchDate | null;
+      }
+  );
 
 /** Unknown is explicit; zero remains an actual measured or assumed value. */
 export type SourcedValue<T> =

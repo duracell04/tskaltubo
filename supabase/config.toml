@@ -1,0 +1,30 @@
+project_id = "tskaltubo"
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 2000
+[db]
+port = 54322
+major_version = 17
+[studio]
+enabled = true
+port = 54323
+[auth]
+enabled = true
+site_url = "https://tskaltubo-partners.netlify.app"
+additional_redirect_urls = ["http://localhost:3000/auth/callback", "http://localhost:3000/auth/callback?locale=*", "https://tskaltubo-partners.netlify.app/auth/callback", "https://tskaltubo-partners.netlify.app/auth/callback?locale=*"]
+[storage]
+enabled = true
+# Project ceiling; the private evidence bucket and application enforce 10 MB.
+file_size_limit = "50MiB"
+
+[auth.email]
+enable_confirmations = true
+max_frequency = "1m0s"
+otp_length = 8
+
+[auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true

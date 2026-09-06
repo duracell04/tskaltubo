@@ -1,60 +1,38 @@
-# Tskaltubo Sanatorium Opportunity Explorer
+# Tskaltubo transparent partner workspace
 
-A research framework for examining Tskaltubo sanatorium properties, redevelopment concepts and target markets independently.
+A Next.js partner-facing project workspace for **Tskaltubo Senior Living & Care Development**. All seven operating concepts remain visible; the care-led configuration is a provisional hypothesis. Historical property assertions are not current verified title or offers.
 
-**Status: Phase 1 — repository skeleton only.** All research datasets are empty. The map and calculator are placeholders. There are no property assessments, financial assumptions, photographs or deployments.
+## Run and verify
 
-## Run locally
-
-Use a supported Node.js LTS release (Node 22.13+ recommended) and npm.
+Use Node 22.13+ and npm. A project-local Node 22 runtime is installed for environments with an older system version.
 
 ```sh
 npm ci
 npm run dev
-```
-
-Open <http://localhost:3000>. `/` redirects to `/de`.
-
-```sh
-npm run typecheck
-npm run lint
 npm run check
+npm test
 npm run build
-npm start
 ```
 
-`check` runs route type generation, strict TypeScript checking and ESLint. `build` verifies production compilation and static generation. No financial test suite is installed because formulas are deliberately absent.
+The root redirects to `/de`. DE, EN and KA routes provide overview, concepts, properties and individual assets, comparison, finance, diligence, evidence, report, collaboration and methodology. Unknown locales/pages/assets return 404.
 
-## Routes
+The app works without credentials as a labeled, dated read-only source snapshot. Anonymous financial experiments and exports work locally; no saved collaboration is simulated. Live storage/auth/database setup is documented in [deployment](docs/deployment.md).
 
-Each of `/de`, `/en` and `/ka` has a home page plus `/sanatoriums`, `/compare`, `/scenarios` and `/methodology`. The `/sanatoriums/[slug]` route is ready for researched properties; the empty inventory means every property slug currently returns not found. Unsupported locales also return not found.
+## Included
 
-Language switching preserves the page path. Georgian structural copy is marked as awaiting native review.
+- Full original audit: 20 sections, 11 historic assets, 7 strategy concepts, 24 risks, 6 gates, 10 priority tasks, claims, decisions and sources.
+- Source hash, provenance, explicit unknowns, searchable report and side-by-side comparisons.
+- Report arithmetic and a versioned monthly development model with roster payroll, entity cash flows, debt, configurable tax, FX, liquidity, returns and downside scenarios.
+- Public read access, Google sign-in, invited contributors, administrator review, private evidence uploads, task assignment, optimistic revisions and explicit gate decisions.
+- Database migrations, repeatable seed import, public exports and a tested read-only fallback.
 
-## Structure and boundaries
+The report and strategy are retained as source versions. Linked external sources and unavailable original decks/registry documents are not represented as independently reviewed. English research extracts remain available in all locales; translated navigation, overview and concept summaries are marked as draft translations.
 
-| Location | Responsibility |
-| --- | --- |
-| `src/app/` | Locale routes, layouts and placeholder pages |
-| `src/components/` | Layout, property, comparison, scenario, finance and map UI |
-| `src/types/` | Property, evidence, concept and finance contracts |
-| `src/data/` | Empty typed research/scenario collections |
-| `src/data/translations/` | Structural UI copy and shared dictionary shape |
-| `src/lib/` | Locale/evidence helpers, constants and finance interface |
-| `research/` | Working property, market, legal and source research |
-| `public/` | Reserved image/map assets; no photographs |
-| `docs/` | Standards, methodology, financial contract and deployment notes |
+## Documentation
 
-Facts are language-neutral and reference evidence. Narratives are separate. Evidence categories do not imply verification status. Current evidence requires an explicit verification date; missing facts remain unknown. Business concepts do not classify the asset itself. Scenario edits must never mutate property facts.
+- [Financial engine conventions and limits](docs/financial-engine-v2.md)
+- [Access, publication, evidence and backup operations](docs/workspace-operations.md)
+- [Deployment and service connection](docs/deployment.md)
+- [Seven-concept strategy](docs/strategy/concept-operating-model-matrix.md)
 
-The finance entry point returns `notImplemented`, never fabricated zero results. The map loads no provider or coordinates. Only navigation needs a client component; placeholder content renders on the server.
-
-No database, CMS, authentication, backend service, analytics, environment variables or deployment configuration are required.
-
-## Next phases
-
-The [Concept & Operating Model Matrix](docs/strategy/concept-operating-model-matrix.md) is the authoritative definition of the seven Tskaltubo scenarios and their service building blocks. All scenarios remain hypotheses; the matrix is a strategy document, with no runtime scenario presets or financial assumptions yet.
-
-Research/input → business concepts and financial model → complete UI → substantive translations and review → full validation → deployment.
-
-See [research standards](docs/research-standard.md), [methodology](docs/methodology.md), [financial-model contract](docs/financial-model.md) and [deployment notes](docs/deployment.md).
+Tests use synthetic financial data separately from the project seed and exercise actual PostgreSQL functions/row-level permissions through PGlite. Provider OAuth, signed storage and production behavior also need hosted verification once connected.
