@@ -1,38 +1,40 @@
-# Tskaltubo transparent partner workspace
+﻿# Tskaltubo interactive investment memo
 
-A Next.js partner-facing project workspace for **Tskaltubo Senior Living & Care Development**. All seven operating concepts remain visible; the care-led configuration is a provisional hypothesis. Historical property assertions are not current verified title or offers.
+A public research memo with an annual investment worksheet. Open a link, explore eleven properties and seven concepts, inspect evidence, and change assumptions locally. No accounts or backend services.
 
-## Run and verify
+## Run locally
 
-Use Node 22.13+ and npm. A project-local Node 22 runtime is installed for environments with an older system version.
+Use Node 22.13 or later:
 
 ```sh
 npm ci
 npm run dev
-npm run check
-npm test
-npm run build
 ```
 
-The root redirects to `/de`. DE, EN and KA routes provide overview, concepts, properties and individual assets, comparison, finance, diligence, evidence, report, collaboration and methodology. Unknown locales/pages/assets return 404.
+No environment file, API key, database or authentication configuration is required. `npm run build` generates a static site in `out/`. `npm start` serves that directory at http://127.0.0.1:4173 for verification.
 
-The app works without credentials as a labeled, dated read-only source snapshot. Anonymous financial experiments and exports work locally; no saved collaboration is simulated. Live storage/auth/database setup is documented in [deployment](docs/deployment.md).
+## Structure
 
-## Included
+- Main memo: overview, properties/details/comparison, business concepts and calculator.
+- Reference layer: Evidence & risks, searchable Research appendix and Methodology.
+- Research: `src/data/research.json`, generated from the immutable dated audit and concept strategy with `npm run import:report`. Static download: `public/data/research.json`.
+- Finance: pure annual engine, year 0 plus ten annual periods. Browser edits never change research data and disappear on reload.
+- Languages: German, English and Georgian. Specialist research remains English; draft translation notices are visible.
 
-- Full original audit: 20 sections, 11 historic assets, 7 strategy concepts, 24 risks, 6 gates, 10 priority tasks, claims, decisions and sources.
-- Source hash, provenance, explicit unknowns, searchable report and side-by-side comparisons.
-- Report arithmetic and a versioned monthly development model with roster payroll, entity cash flows, debt, configurable tax, FX, liquidity, returns and downside scenarios.
-- Public read access, Google sign-in, invited contributors, administrator review, private evidence uploads, task assignment, optimistic revisions and explicit gate decisions.
-- Database migrations, repeatable seed import, public exports and a tested read-only fallback.
+The care-plus-rehabilitation report configuration is provisional. Report assertions are attributed and unverified; historical asset values do not establish availability or current ownership. Unknown financial inputs remain null.
 
-The report and strategy are retained as source versions. Linked external sources and unavailable original decks/registry documents are not represented as independently reviewed. English research extracts remain available in all locales; translated navigation, overview and concept summaries are marked as draft translations.
+## Verify
 
-## Documentation
+```sh
+npm test
+npm run check
+npm run build
+npm start
+npm run verify:http
+```
 
-- [Financial engine conventions and limits](docs/financial-engine-v2.md)
-- [Access, publication, evidence and backup operations](docs/workspace-operations.md)
-- [Deployment and service connection](docs/deployment.md)
-- [Seven-concept strategy](docs/strategy/concept-operating-model-matrix.md)
+See [financial conventions](docs/financial-model.md), [deployment](docs/deployment.md), and [verification](docs/verification.md).
 
-Tests use synthetic financial data separately from the project seed and exercise actual PostgreSQL functions/row-level permissions through PGlite. Provider OAuth, signed storage and production behavior also need hosted verification once connected.
+## Archive
+
+`archive/full-workspace-prototype` at `b6eb5f2` preserves the earlier collaboration prototype, excluding credentials and generated artifacts. It is not a dependency of this product. The old Supabase project is left untouched for a separate cleanup decision.

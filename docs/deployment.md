@@ -1,41 +1,22 @@
-# Deployment and free service setup
+﻿# Static deployment and rollback
 
-Target: Netlify Free hosting, Supabase Free database/auth/storage, Google OAuth. No paid upgrades, custom domain purchases, automatic recharge or outgoing invitations are required.
+Production: https://tskaltubo-partners.netlify.app
+Netlify site: `20513c03-5014-4dbb-8933-6b15dac15ef5`.
 
-Public deployment: https://tskaltubo-partners.netlify.app. See [verification](verification.md) for deployment IDs, completed checks and the remaining Google OAuth dependency.
+## Build without services
 
-## Local setup
+Use a clean Git checkout, Node 22.13+, `npm ci`, then `npm run check`, `npm test`, and `npm run build`. Do not copy `.env` files. Next.js exports all pages into `out/`; there are no runtime functions or API routes. `npm start` is a local static verification server only. Any static host can serve `out/`, with equivalent redirects and a 404 page.
 
-1. Install dependencies with Node 22.13+ (`npm ci`).
-2. Copy `.env.example` to `.env.local` and fill the values from the **Tskaltubo** Supabase project. Never commit service-role credentials.
-3. Apply `supabase/migrations` to the new project's database (`supabase link --project-ref <ref>` then `supabase db push`). For local development, Docker plus `supabase start` uses `supabase/config.toml`.
-4. Run `npm run seed`. It inserts missing original-source records and preserves existing edits.
-5. Configure Google OAuth in the Supabase project. Create a Google Web OAuth client, add the project's Supabase Auth callback URL, and store its client ID/secret in Supabase Auth provider settings. Set the authorized app origins and callbacks for local and hosted use. Do not put the OAuth secret in a browser environment variable.
-6. Sign in once as the owner, then run `node --env-file=.env.local scripts/bootstrap-admin.mjs <verified-owner-email>`. This grants only the explicitly named verified account administrator access and sends no message.
+Netlify uses `publish = "out"` and skips its Next runtime adapter. Deploy the already-built directory from the exact committed revision using the authenticated Netlify CLI with `--dir out --no-build`. Verify the preview before promoting it to production. Record the commit and deploy ID in the deployment message. Verify 57 routes, legacy reading redirects, removed endpoints and browser calculations after deployment.
 
-## Netlify
+Main routes are the same in DE/EN/KA. Legacy `/workspace` redirects to the locale overview; `/diligence` redirects to Evidence & risks. `/api/*` and authentication routes return 404. The root directs visitors to English; all locale links remain available.
 
-Use the Free plan and default `netlify.app` hostname. `netlify.toml` configures the Next.js build and Node 22. Set `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, server-only `SUPABASE_SERVICE_ROLE_KEY` and the final `NEXT_PUBLIC_SITE_URL` through Netlify environment settings. Netlify supports Next.js through its OpenNext adapter. Deploy a preview, verify it, then publish production.
+## Credentials and services
 
-Public environment variables are embedded at build time; rebuild after changing them. Service-role credentials are server-only and must never use a `NEXT_PUBLIC_` prefix. Configure the final production origin and exact callback allowlist in Supabase, including `/auth/callback` and the locale query variants. Disable any paid add-ons and automatic credit recharge. Keep projects on their free plans.
+The application needs no private or public environment variables. Remove obsolete app variables from this Netlify site only after the static replacement passes production verification. Leave the old Supabase project/data and ignored local credentials untouched pending separate cleanup. Do not add OAuth, functions, storage or paid upgrades.
 
-## Release checks
+## Limits and recovery
 
-- `npm run check`, `npm test`, `npm run build`.
-- `node scripts/verify-http.mjs <base-url>` checks all 33 locale/page combinations, 404s, public export and anonymous/origin mutation boundaries.
-- Desktop/mobile browser verification of search, compare, case calculations, missing-input states and localized navigation.
-- Google sign-in and invited-role recognition; revoked accounts cannot write.
-- Contributor creates a draft and uploads a private file; anonymous readers cannot access either.
-- Administrator reviews and publishes; all readers see the same published finding.
-- A stale proposal fails with conflict; a gate without published evidence cannot be approved.
-- Save/reload a model and verify it reproduces its input version and output; download published evidence.
+Netlify Free was confirmed with automatic recharge disabled. The 6 September 2026 [pricing snapshot](https://www.netlify.com/pricing/) lists 300 credits/month, production deploys at 15 credits, bandwidth at 20 credits/GB and requests at 2 credits/10,000. Check the dashboard for current usage; reaching the free quota may pause hosting. No backend usage remains.
 
-No authentication or upload success should be claimed until those provider-backed flows have actually been exercised. The dated snapshot is intentionally usable before credentials exist.
-
-## Recovery and limits
-
-Keep database exports and evidence objects together in a private backup. The public export excludes private drafts and identity details. Use free provider dashboards to monitor usage. Free services can pause or exhaust quotas; the app displays a dated snapshot and does not pretend that offline writes succeeded. See [operations](workspace-operations.md) for publication and recovery details.
-
-Quota snapshot checked 6 September 2026: [Netlify Free](https://www.netlify.com/pricing/) includes 300 credits/month; production deploys use 15 credits, compute 10 credits/GB-hour, bandwidth 20 credits/GB and requests 2 credits/10,000. Automatic recharge is disabled. [Supabase Free](https://supabase.com/pricing) includes a 500 MB database, 1 GB file storage, 5 GB egress plus 5 GB cached egress, and 50,000 monthly active users. Projects can pause after one week of inactivity; automatic backups are not included. Monitor actual dashboards because quotas can change. If hosting itself is paused, the in-app fallback cannot run: use the retained local source and exports until service resumes.
-
-The storage project ceiling is 50 MiB; the application's private evidence bucket independently caps each file at 10 MB. Avoid changing storage settings through CLI versions that try to enable paid vector buckets. Preview config differences before pushing provider settings, especially after configuring Google OAuth.
+Repository data and source files are the authoritative backup. Rebuild any committed revision and deploy its static output to restore or move hosts. The original report hash is checked by tests. There are no visitor calculations to restore because edits are intentionally transient. For an immediate rollback, promote the preceding verified static deploy in Netlify. The full platform archive is for code reference, not the default production rollback target.
