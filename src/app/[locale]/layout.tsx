@@ -7,9 +7,9 @@ import {
   requireLocale,
   type LocalePageProps,
 } from "@/lib/locale";
-import { copy as workspaceCopy } from "@/lib/copy";
-import { projectName } from "@/lib/workspace-data";
-export const dynamic = "force-dynamic";
+import { copy as memoCopy } from "@/lib/copy";
+import { projectName } from "@/lib/research-data";
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
@@ -28,7 +28,7 @@ export default async function LocaleLayout({
 }: LocalePageProps & { children: ReactNode }) {
   const locale = requireLocale((await params).locale);
   const copy = getDictionary(locale);
-  const c = workspaceCopy(locale);
+  const c = memoCopy(locale);
   return (
     <div lang={locale} className="site-shell">
       <a className="skip-link" href="#main-content">
@@ -46,7 +46,7 @@ export default async function LocaleLayout({
           <p>{c.footer}</p>
           <a href={`/${locale}/methodology`}>{c.methodology}</a>
           <span> · </span>
-          <a href="/api/export" download>
+          <a href="/data/research.json" download>
             Export public data
           </a>
         </div>

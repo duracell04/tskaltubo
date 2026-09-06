@@ -1,12 +1,13 @@
 "use client";
+import { useQuery } from "@/lib/use-query";
 import { assessments } from "@/lib/concept-assessment";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Search, ArrowUpRight } from "lucide-react";
-import type { WorkspaceRecord } from "@/types/workspace";
+import type { ResearchRecord } from "@/types/research";
 import type { Locale } from "@/lib/constants";
 import { copy, conceptCopy } from "@/lib/copy";
-import { seed, expertiseLabels } from "@/lib/workspace-data";
+import { seed, expertiseLabels } from "@/lib/research-data";
 import { RichText, SourceNote, Tag } from "./ui";
 const str = (v: unknown) => (typeof v === "string" ? v : "");
 export function SearchBar({
@@ -35,7 +36,7 @@ export function PropertyExplorer({
   records,
   locale,
 }: {
-  records: WorkspaceRecord[];
+  records: ResearchRecord[];
   locale: Locale;
 }) {
   const [query, setQuery] = useState(""),
@@ -117,7 +118,7 @@ export function ConceptExplorer({
   records,
   locale,
 }: {
-  records: WorkspaceRecord[];
+  records: ResearchRecord[];
   locale: Locale;
 }) {
   const concepts = records.filter((r) => r.kind === "concept");
@@ -169,9 +170,6 @@ export function ConceptExplorer({
               <Link href={`/${locale}/finance?concept=${r.id}`}>
                 Model this concept <ArrowUpRight size={15} />
               </Link>
-              <Link href={`/${locale}/workspace?issue=${r.id}`}>
-                Contribute
-              </Link>
             </div>
             <SourceNote
               source="strategy-matrix"
@@ -188,14 +186,14 @@ export function CompareExplorer({
   records,
   locale,
 }: {
-  records: WorkspaceRecord[];
+  records: ResearchRecord[];
   locale: Locale;
 }) {
-  const [kind, setKind] = useState("concept"),
+  const [kind, setKind] = useState("property"),
     [selected, setSelected] = useState<string[]>([
-      "TSK-S2",
-      "TSK-S6",
-      "TSK-S7",
+      "intouristi",
+      "geologist",
+      "imereti",
     ]);
   const rows = records.filter((r) => r.kind === kind);
   const chosen = rows.filter((r) => selected.includes(r.id));
@@ -301,7 +299,7 @@ export function CompareExplorer({
                 <td key={r.id}>
                   Not established.{" "}
                   <Link
-                    href={`/${locale}/finance?concept=${kind === "concept" ? r.id : "TSK-S7"}`}
+                    href={`/${locale}/finance?${kind === "concept" ? "concept" : "property"}=${r.id}`}
                   >
                     Test assumptions
                   </Link>
@@ -319,113 +317,70 @@ export function CompareExplorer({
     </>
   );
 }
-export function DiligenceExplorer({
+export function ReferenceExplorer({
   records,
   locale,
 }: {
-  records: WorkspaceRecord[];
+  records: ResearchRecord[];
   locale: Locale;
 }) {
   const [query, setQuery] = useState(""),
-    [expertise, setExpertise] = useState("all"),
-    [tab, setTab] = useState("task");
-  const rows = records
-    .filter((r) => r.kind === tab)
-    .filter((r) =>
+    [kind, setKind] = useState("risk");
+  const rows = records.filter(
+    (r) =>
+      r.kind === kind &&
       (r.title + JSON.stringify(r.body))
         .toLowerCase()
         .includes(query.toLowerCase()),
-    )
-    .filter((r) => expertise === "all" || r.body.expertise === expertise);
+  );
   return (
     <>
-      <div className="gate-strip">
-        {records
-          .filter((r) => r.kind === "gate")
-          .map((r) => (
-            <details className="gate" key={r.id} id={r.id}>
-              <summary>
-                <span>GATE {String(r.body.number)}</span>
-                <strong>{r.title}</strong>
-                <small>{str(r.body.status).replaceAll("_", " ")}</small>
-              </summary>
-              <RichText>{str(r.body.body)}</RichText>
-              <Link href={`/${locale}/workspace?issue=${r.id}`}>
-                Evidence & decision
-              </Link>
-            </details>
-          ))}
-      </div>
-      <div className="section-heading">
-        <h2>Open work, visible responsibilities</h2>
-        <Link href={`/${locale}/report#section-17`}>Full workplan</Link>
-      </div>
-      <div className="segmented">
-        {["task", "risk", "decision"].map((t) => (
-          <button key={t} aria-pressed={tab === t} onClick={() => setTab(t)}>
-            {t === "task"
-              ? "Priority workplan"
-              : t === "risk"
-                ? "Risk register"
-                : "Open decisions"}
-          </button>
-        ))}
-      </div>
+      <p>
+        Reference topics from the dated audit. These are research questions, not
+        tracked tasks.
+      </p>
       <div className="toolbar">
         <SearchBar value={query} onChange={setQuery} />
-        <label className="select-label">
-          Expertise
-          <select
-            value={expertise}
-            onChange={(e) => setExpertise(e.target.value)}
-          >
-            <option value="all">All capabilities</option>
-            {Object.entries(expertiseLabels).map(([k, v]) => (
-              <option key={k} value={k}>
-                {v}
-              </option>
-            ))}
-          </select>
-        </label>
+        <div className="segmented">
+          {[
+            ["risk", "Risk register"],
+            ["question", "Unresolved questions"],
+            ["topic", "Diligence topics"],
+          ].map(([id, label]) => (
+            <button
+              key={id}
+              aria-pressed={kind === id}
+              onClick={() => setKind(id!)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
       <div className="issue-list">
         {rows.map((r) => (
-          <article className="issue" key={r.id} id={r.id}>
-            <div>
-              <span
-                className={`status-dot ${str(r.body.rating) === "Critical" ? "critical" : ""}`}
-              />
-              <span className="small muted">
-                {r.id.toUpperCase()} ·{" "}
-                {expertiseLabels[str(r.body.expertise)] ?? "Partner expertise"}
-              </span>
-            </div>
+          <article className="issue" id={r.id} key={r.id}>
+            <span className="small muted">
+              {expertiseLabels[str(r.body.expertise)] ?? "Research topic"}
+            </span>
             <h3>{r.title}</h3>
-            {Boolean(r.body.rating) && (
-              <span className="tag tag-risk">
+            {r.kind === "risk" && (
+              <p className="tag tag-risk">
                 {str(r.body.rating)} · probability {str(r.body.probability)} ·
                 impact {str(r.body.impact)}
-              </span>
+              </p>
             )}
             <p>
-              {str(r.body.output) ||
-                str(r.body.mitigation) ||
-                str(r.body.status)}
+              {str(r.body.mitigation) ||
+                str(r.body.output) ||
+                "Evidence needed to resolve this question."}
             </p>
-            <p className="small muted">
-              {str(r.body.rationale) || str(r.body.ownerRole)}{" "}
-              {r.kind === "task"
-                ? `Status: ${str(r.body.status).replaceAll("_", " ")} · ${r.assigned_to ? "Assigned collaborator" : "Named owner not yet assigned"}`
-                : ""}
-            </p>
-            <Link href={`/${locale}/workspace?issue=${r.id}`}>
-              Contribute evidence or expertise <ArrowUpRight size={14} />
-            </Link>
+            <p>{str(r.body.rationale)}</p>
             <SourceNote locator={str(r.body.locator)} locale={locale} />
           </article>
         ))}
       </div>
-      {rows.length === 0 && <p>No matching items.</p>}
+      {!rows.length && <p>No matching topics.</p>}
     </>
   );
 }
@@ -434,12 +389,18 @@ export function EvidenceExplorer({
   locale,
   initialKind = "claim",
 }: {
-  records: WorkspaceRecord[];
+  records: ResearchRecord[];
   locale: Locale;
   initialKind?: string;
 }) {
   const [query, setQuery] = useState(""),
-    [kind, setKind] = useState(initialKind);
+    [chosenKind, setKind] = useState<string | null>(null);
+  const queryParams = useQuery();
+  const kind =
+    chosenKind ??
+    (queryParams.get("kind") === "source" ? "source" : initialKind);
+
+  useEffect(()=>{const id=location.hash.slice(1);if(id)document.getElementById(id)?.scrollIntoView();},[kind]);
   const rows = records
     .filter((r) => r.kind === kind)
     .filter((r) =>
@@ -455,7 +416,7 @@ export function EvidenceExplorer({
       <div className="toolbar">
         <SearchBar value={query} onChange={setQuery} />
         <div className="segmented">
-          {["claim", "source", "document"].map((k) => (
+          {["claim", "source"].map((k) => (
             <button
               key={k}
               aria-pressed={kind === k}
@@ -492,7 +453,7 @@ export function EvidenceExplorer({
               <>
                 <p>
                   {str(r.body.publisher)} ·{" "}
-                  {str(r.body.availability) || "Uploaded evidence"}
+                  {str(r.body.availability) || "Availability unknown"}
                 </p>
                 <p className="small muted">
                   Published: {str(r.body.publishedAt) || "date not established"}{" "}
@@ -512,11 +473,6 @@ export function EvidenceExplorer({
                     Read retained concept matrix
                   </Link>
                 )}
-                {kind === "document" && (
-                  <a href={`/api/documents/${r.id}`}>
-                    Download published evidence
-                  </a>
-                )}
                 {Boolean(r.body.sha256) && (
                   <details>
                     <summary>Source integrity</summary>
@@ -530,8 +486,8 @@ export function EvidenceExplorer({
       </div>
       {!rows.length && (
         <p>
-          No matching published evidence. Missing documents are not treated as
-          verified sources.
+          No matching evidence. Missing documents are not treated as verified
+          sources.
         </p>
       )}
     </>
@@ -539,10 +495,11 @@ export function EvidenceExplorer({
 }
 export function ReportExplorer({ strategy = false }: { strategy?: boolean }) {
   const [query, setQuery] = useState("");
+  const showStrategy = useQuery().get("strategy") === "1" || strategy;
   const sections = seed.sections.filter((s) =>
     (s.title + s.body).toLowerCase().includes(query.toLowerCase()),
   );
-  if (strategy) return <RichText>{seed.strategy}</RichText>;
+  if (showStrategy) return <RichText>{seed.strategy}</RichText>;
   return (
     <>
       <SearchBar

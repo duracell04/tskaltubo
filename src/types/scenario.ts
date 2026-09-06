@@ -1,5 +1,5 @@
 import type { Locale } from "@/lib/constants";
-import type { FinanceInput } from "./finance";
+import type { AnnualInput } from "./annual-finance";
 
 export type ServiceModel =
   | "independent_living"
@@ -26,7 +26,7 @@ export interface Scenario {
   conceptId: string;
   /** A scenario can exist independently of a property. */
   propertyId: string | null;
-  assumptions: FinanceInput;
+  assumptions: AnnualInput;
 }
 
 export interface ConceptNarrative {

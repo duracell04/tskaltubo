@@ -88,7 +88,7 @@ export function Heading({
   return (
     <div className="page-heading">
       <div>
-        <p className="eyebrow">{eyebrow ?? "TSKALTUBO / PROJECT WORKSPACE"}</p>
+        <p className="eyebrow">{eyebrow ?? "TSKALTUBO / INVESTMENT MEMO"}</p>
         <h1>{title}</h1>
         {description && <p className="lede">{description}</p>}
       </div>

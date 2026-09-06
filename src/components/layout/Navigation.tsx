@@ -13,47 +13,58 @@ export function Navigation({ locale }: NavigationProps) {
   const c = copy(locale);
   const sections = [
     ["overview", ""],
-    ["scenarios", "/scenarios"],
     ["sanatoriums", "/sanatoriums"],
+    ["scenarios", "/scenarios"],
     ["finance", "/finance"],
-    ["diligence", "/diligence"],
-    ["evidence", "/evidence"],
-    ["report", "/report"],
-    ["workspace", "/workspace"],
   ] as const;
   const pathname = usePathname();
   const suffix = pathname.replace(/^\/(de|en|ka)(?=\/|$)/, "");
 
   return (
-    <div className="navigation-row">
-      <nav aria-label="Main navigation" className="main-navigation">
-        {sections.map(([key, path]) => {
-          const href = `/${locale}${path}`;
-          const active =
-            path === ""
-              ? pathname === href
-              : pathname === href || pathname.startsWith(`${href}/`);
-          return (
+    <div>
+      <div className="navigation-row">
+        <nav aria-label="Main navigation" className="main-navigation">
+          {sections.map(([key, path]) => {
+            const href = `/${locale}${path}`;
+            const active =
+              path === ""
+                ? pathname === href
+                : pathname === href || pathname.startsWith(`${href}/`);
+            return (
+              <Link
+                key={key}
+                href={href}
+                aria-current={active ? "page" : undefined}
+              >
+                {c[key]}
+              </Link>
+            );
+          })}
+        </nav>
+        <nav aria-label="Language" className="language-navigation">
+          {LOCALES.map((target) => (
             <Link
-              key={key}
-              href={href}
-              aria-current={active ? "page" : undefined}
+              key={target}
+              href={`/${target}${suffix}`}
+              hrefLang={target}
+              lang={target}
+              aria-current={target === locale ? "true" : undefined}
             >
-              {c[key]}
+              {target.toUpperCase()}
             </Link>
-          );
-        })}
-      </nav>
-      <nav aria-label="Language" className="language-navigation">
-        {LOCALES.map((target) => (
-          <Link
-            key={target}
-            href={`/${target}${suffix}`}
-            hrefLang={target}
-            lang={target}
-            aria-current={target === locale ? "true" : undefined}
-          >
-            {target.toUpperCase()}
+          ))}
+        </nav>
+      </div>
+      <nav aria-label="Research navigation" className="secondary-navigation">
+        {(
+          [
+            ["evidence", "/evidence"],
+            ["report", "/report"],
+            ["methodology", "/methodology"],
+          ] as const
+        ).map(([key, path]) => (
+          <Link key={key} href={`/${locale}${path}`}>
+            {c[key]}
           </Link>
         ))}
       </nav>

@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
-
 const nextConfig: NextConfig = {
-  // Keep development from adding generated agent files to the skeleton.
+  output: "export",
+  trailingSlash: true,
+  images: { unoptimized: true },
   agentRules: false,
 };
-
 export default nextConfig;

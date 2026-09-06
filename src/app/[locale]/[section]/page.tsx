@@ -1,18 +1,14 @@
-import { WorkspacePage } from "@/components/WorkspacePage";
+import { MemoPage } from "@/components/MemoPage";
 import { requireLocale } from "@/lib/locale";
+export const dynamicParams = false;
+export function generateStaticParams() {
+  return ["finance", "evidence", "report"].map((section) => ({ section }));
+}
 export default async function Page({
   params,
-  searchParams,
 }: {
   params: Promise<{ locale: string; section: string }>;
-  searchParams: Promise<Record<string, string | undefined>>;
 }) {
   const { locale, section } = await params;
-  return (
-    <WorkspacePage
-      locale={requireLocale(locale)}
-      section={section}
-      query={await searchParams}
-    />
-  );
+  return <MemoPage locale={requireLocale(locale)} section={section} />;
 }

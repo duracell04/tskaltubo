@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { it, expect } from "vitest";
-import seed from "../src/data/workspace.json";
+import seed from "../src/data/research.json";
 it("retains all report sections, scenarios, assets and gates", () => {
   expect(seed.sections).toHaveLength(20);
   expect(seed.assets).toHaveLength(11);

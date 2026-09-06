@@ -243,9 +243,12 @@ if (
   );
 fs.mkdirSync("src/data", { recursive: true });
 fs.writeFileSync(
-  "src/data/workspace.json",
+  "src/data/research.json",
   JSON.stringify(out, null, 2) + "\n",
 );
 console.log(
   `Imported ${sections.length} sections, ${assets.length} assets, ${concepts.length} concepts, ${risks.length} risks, ${gates.length} gates. SHA256 ${out.reportSha256}`,
 );
+
+fs.mkdirSync("public/data", { recursive: true });
+fs.copyFileSync("src/data/research.json", "public/data/research.json");

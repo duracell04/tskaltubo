@@ -2,14 +2,13 @@ import type { Locale } from "./constants";
 export const ui = {
   en: {
     overview: "Overview",
-    scenarios: "Operating concepts",
+    scenarios: "Business concepts",
     sanatoriums: "Properties",
     compare: "Compare",
-    finance: "Financial lab",
+    finance: "Calculator",
     diligence: "Diligence",
-    evidence: "Evidence",
-    report: "Full report",
-    workspace: "Collaborate",
+    evidence: "Evidence & risks",
+    report: "Research appendix",
     methodology: "Methodology",
     tagline: "A place to examine the possibility.",
     intro:
@@ -19,12 +18,10 @@ export const ui = {
     hypothesisText:
       "Long-term residential care with separately validated rehabilitation and mineral-water hydrotherapy. A private-pay proposition, subject to demand, licensing, staffing and asset diligence.",
     explore: "Explore the concepts",
-    contribute: "Find where you can contribute",
     status: "Controlled validation only",
     statusText:
       "Exploratory partner discussions are appropriate. A site commitment, investment solicitation or promised clinical outcome is not yet supported.",
     snapshot: "Source snapshot · 6 September 2026",
-    live: "Live workspace",
     original:
       "Research extracts remain in their original English. Localized summaries are draft translations; source meaning takes precedence.",
     search: "Search",
@@ -39,9 +36,6 @@ export const ui = {
     risk: "What must be resolved",
     seven: "Seven ways to develop the opportunity",
     properties: "Historic assets, current questions",
-    partner: "The next step is expertise.",
-    partnerText:
-      "Help resolve a specific uncertainty. Operating capacity, clinical governance, site knowledge, engineering, demand evidence and capital each have a place in the workplan.",
     footer:
       "Tskaltubo Senior Living & Care Development · Pre-feasibility only. Facts, assumptions and unresolved questions are kept separate.",
   },
@@ -52,9 +46,8 @@ export const ui = {
     compare: "Vergleich",
     finance: "Finanzmodell",
     diligence: "Prüfprogramm",
-    evidence: "Evidenz",
-    report: "Gesamtbericht",
-    workspace: "Mitwirken",
+    evidence: "Evidenz & Risiken",
+    report: "Forschungsanhang",
     methodology: "Methodik",
     tagline: "Ein Ort, um Möglichkeiten zu prüfen.",
     intro:
@@ -64,12 +57,10 @@ export const ui = {
     hypothesisText:
       "Stationäre Langzeitpflege mit separat zu validierender Rehabilitation und mineralwasserbasierter Hydrotherapie. Selbstzahlung als Ausgangspunkt; Nachfrage, Zulassung, Personal und Immobilien bleiben zu prüfen.",
     explore: "Betriebskonzepte erkunden",
-    contribute: "Passenden Beitrag finden",
     status: "Nur kontrollierte Validierung",
     statusText:
       "Sondierungsgespräche mit Partnern sind sinnvoll. Eine Immobilienbindung, Investorenansprache oder zugesagte klinische Wirkung ist noch nicht ausreichend belegt.",
     snapshot: "Quellenstand · 6. September 2026",
-    live: "Aktueller Arbeitsbereich",
     original:
       "Forschungsauszüge bleiben im englischen Original. Übersetzte Zusammenfassungen sind Entwürfe; die Bedeutung der Quelle ist maßgeblich.",
     search: "Suchen",
@@ -84,9 +75,6 @@ export const ui = {
     risk: "Was geklärt werden muss",
     seven: "Sieben mögliche Entwicklungskonzepte",
     properties: "Historische Immobilien, aktuelle Fragen",
-    partner: "Der nächste Schritt braucht Fachwissen.",
-    partnerText:
-      "Helfen Sie, konkrete Unsicherheiten zu klären: Betrieb, klinische Verantwortung, Immobilienkenntnis, Technik, Nachfrage und Finanzierung.",
     footer:
       "Tskaltubo Senior Living & Care Development · Vorprüfung. Tatsachen, Annahmen und offene Fragen werden getrennt ausgewiesen.",
   },
@@ -99,7 +87,6 @@ export const ui = {
     diligence: "შემოწმების გეგმა",
     evidence: "მტკიცებულებები",
     report: "სრული ანგარიში",
-    workspace: "თანამშრომლობა",
     methodology: "მეთოდოლოგია",
     tagline: "ადგილი შესაძლებლობების შესაფასებლად.",
     intro:
@@ -109,12 +96,10 @@ export const ui = {
     hypothesisText:
       "გრძელვადიანი საცხოვრებელი მოვლა, ცალკე შესამოწმებელი რეაბილიტაციითა და მინერალური წყლის ჰიდროთერაპიით. საწყისი მოდელი კერძო გადახდას ეფუძნება; მოთხოვნა, ლიცენზირება, პერსონალი და ქონება ჯერ შესამოწმებელია.",
     explore: "მოდელების შესწავლა",
-    contribute: "იპოვეთ თქვენი წვლილი",
     status: "მხოლოდ კონტროლირებადი შემოწმება",
     statusText:
       "პარტნიორებთან საწყისი განხილვა მიზანშეწონილია. ქონებაზე ვალდებულება, ინვესტიციის შეთავაზება ან კლინიკური შედეგის დაპირება ჯერ დასაბუთებული არ არის.",
     snapshot: "წყაროს თარიღი · 6 სექტემბერი 2026",
-    live: "აქტიური სამუშაო სივრცე",
     original:
       "კვლევის ამონარიდები ინგლისურ ორიგინალშია. თარგმნილი შეჯამებები სამუშაო ვერსიებია და საჭიროებს მშობლიურ ენაზე გადამოწმებას.",
     search: "ძიება",
@@ -129,9 +114,6 @@ export const ui = {
     risk: "რა არის გასარკვევი",
     seven: "განვითარების შვიდი მოდელი",
     properties: "ისტორიული ობიექტები და ღია კითხვები",
-    partner: "შემდეგ ნაბიჯს პროფესიული ცოდნა სჭირდება.",
-    partnerText:
-      "დაგვეხმარეთ კონკრეტული გაურკვევლობების გადაჭრაში: ოპერირება, კლინიკური მართვა, ქონება, ინჟინერია, მოთხოვნა და დაფინანსება.",
     footer:
       "Tskaltubo Senior Living & Care Development · წინასწარი შეფასება. ფაქტები, ვარაუდები და ღია კითხვები ცალ-ცალკეა წარმოდგენილი.",
   },

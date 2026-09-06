@@ -1087,11 +1087,7 @@ details[open] > summary {
 .auth-panel .button {
   flex-shrink: 0;
 }
-.workspace-columns {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 1.5rem;
-}
+
 .task-control {
   border-bottom: 1px solid var(--border);
   padding: 1rem 0;
@@ -1223,9 +1219,7 @@ details[open] > summary {
   .overview-grid,
   .finance-layout,
   .model-layout,
-  .workspace-columns {
-    grid-template-columns: 1fr;
-  }
+  
   .blocker-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1389,9 +1383,7 @@ details[open] > summary {
   }
   .report-layout,
   .model-layout,
-  .workspace-columns {
-    display: block;
-  }
+  
   .report-section {
     border: 0;
     padding: 0;
@@ -1449,3 +1441,163 @@ details[open] > summary {
 .chart-row:last-child .chart-track span {
   background: #b39855;
 }
+.secondary-navigation {
+  display: flex;
+  gap: 1.6rem;
+  flex-wrap: wrap;
+  padding: 0 0 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.screening-reference {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2rem;
+  margin-bottom: 3rem;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.form-grid label,
+.year-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+}
+.form-grid input,
+.form-grid select,
+.toolbar select,
+.screening-reference select {
+  width: 100%;
+  padding: 0.65rem;
+  border: 1px solid #bcc8b6;
+  border-radius: 4px;
+  background: #fff;
+  color: #18352b;
+}
+.form-grid input[type="checkbox"] {
+  width: auto;
+}
+.service-editor {
+  border: 1px solid #cbd3c4;
+  margin: 1.5rem 0;
+  padding: 1.2rem;
+  border-radius: 6px;
+}
+.service-editor legend {
+  padding: 0 0.5rem;
+  font-weight: 600;
+}
+.year-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 0.6rem;
+  margin: 1rem 0;
+}
+.year-fields input {
+  width: 100%;
+  padding: 0.6rem;
+}
+.advanced-inputs {
+  padding: 1.5rem;
+  background: #eef0e8;
+  margin: 2rem 0;
+}
+.assumption-source {
+  margin: 1rem 0;
+}
+.worksheet-results {
+  border-top: 2px solid #244638;
+  padding-top: 2rem;
+  margin-top: 3rem;
+}
+.cash-row {
+  display: grid;
+  grid-template-columns: 65px 1fr 135px;
+  gap: 0.6rem;
+  align-items: center;
+  font-size: 0.8rem;
+  margin: 0.65rem 0;
+}
+.cash-row strong {
+  text-align: right;
+}
+.cash-row .chart-track {
+  height: 12px;
+}
+.cash-row .negative {
+  background: #ac714f;
+}
+.cash-chart {
+  margin: 2rem 0;
+}
+.calculator h3 {
+  margin-top: 2rem;
+}
+.calculator select {
+  max-width: 100%;
+}
+.calculator .toolbar > label {
+  max-width: 100%;
+  min-width: 0;
+}
+.calculator .toolbar {
+  align-items: end;
+}
+.calculator .stats-row {
+  margin: 1.5rem 0;
+}
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .stats-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .secondary-navigation {
+    gap: 1rem;
+  }
+  .calculator .toolbar {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .cash-row {
+    grid-template-columns: 50px 1fr 105px;
+  }
+  .cash-row strong {
+    font-size: 0.75rem;
+  }
+}
+@media print {
+  .secondary-navigation,
+  button {
+    display: none !important;
+  }
+  .table-scroll {
+    overflow: visible;
+  }
+  table {
+    font-size: 8pt;
+  }
+  .form-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .year-fields {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .service-editor,
+  .stats-row {
+    break-inside: avoid;
+  }
+  .cash-chart {
+    break-inside: avoid;
+  }
+  .worksheet-results {
+    break-before: page;
+  }
+}
+
+.live-summary{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:1rem;background:#183b2e;color:white;border-radius:5px;margin:1.5rem 0}.live-summary span{font-size:.8rem}.live-summary strong{display:block;font-size:1.1rem}@media print{.live-summary{position:static}}@media(max-width:600px){.live-summary{position:static;display:grid;grid-template-columns:1fr 1fr}}

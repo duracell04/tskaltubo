@@ -1,6 +1,10 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { publicRecords } from "@/lib/repository";
+import { researchRecords, seed } from "@/lib/research-data";
+export const dynamicParams = false;
+export function generateStaticParams() {
+  return seed.assets.map((a) => ({ slug: a.id }));
+}
 import { Heading, Panel, SourceNote, Tag } from "@/components/ui";
 import { requireLocale } from "@/lib/locale";
 
@@ -11,7 +15,7 @@ export default async function PropertyPage({
 }) {
   const { locale, slug } = await params;
   const lang = requireLocale(locale);
-  const { records } = await publicRecords();
+  const records = researchRecords();
   const property = records.find(
     (item) => item.id === slug && item.kind === "property",
   );
@@ -62,8 +66,8 @@ export default async function PropertyPage({
             licensing and operating costs must support independent operation
             during later construction.
           </p>
-          <Link className="button" href={`/${locale}/workspace?issue=${slug}`}>
-            Contribute asset evidence
+          <Link className="button" href={`/${locale}/finance?property=${slug}`}>
+            Explore property economics
           </Link>
         </Panel>
       </div>
