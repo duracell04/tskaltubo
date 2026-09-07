@@ -1,10 +1,10 @@
-import { MemoPage } from "@/components/MemoPage";
+import { InventoryPage } from "@/components/PropertyPages";
 import { requireLocale, type LocalePageProps } from "@/lib/locale";
 export default async function Page({ params }: LocalePageProps) {
   return (
-    <MemoPage
+    <InventoryPage
       locale={requireLocale((await params).locale)}
-      section="overview"
+      home
     />
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
 import "./memo.css";
+import "./property.css";
 
 export const metadata: Metadata = {
   title: "Tskaltubo Senior Living & Care Development",

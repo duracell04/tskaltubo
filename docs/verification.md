@@ -1,5 +1,17 @@
 # Static memo verification
 
+## Property-first revision, 7 September 2026
+
+- Maintained inventory: 22 identities, 66 localized profiles, dated claim-level evidence and property-linked news. Original eleven-property audit and seven scenario definitions remain unchanged.
+- Type checking and ESLint pass. All 26 tests pass, including identity/source validation, conflicting figures, historical availability, forecast/registry/map guards, Georgian number formatting, audit importer isolation and static segment compatibility.
+- Production export builds successfully. HTTP verification covers 99 localized routes, invalid/removed routes, legacy redirects and the unchanged audit download.
+- Headless Chromium: 137 acceptance checks, including 81 viewport/page combinations at 360, 768 and 1440px in English, German and Georgian. No document overflow, missing control labels, failed resources, page errors or console messages in the final suite.
+- Interactions cover alias/cadastral search, combined filters, empty results, historical-auction labels, both price conflicts, source anchors, news-to-property navigation, all seven scenarios, calculator edits/reference/reset, mobile keyboard navigation/table scrolling, language route/query/fragment preservation and request-copy feedback.
+- Screenshots and the machine-readable results are under ignored `.verification/property-first/`; the repeatable harness is `scripts/verify-property-browser.mjs`. The local CLI required an explicitly selected installed Chromium executable and a fresh task-owned session to avoid stale error-buffer entries.
+- Browser testing exposed Next.js Windows export issue [#92339](https://github.com/vercel/next.js/issues/92339). A postbuild compatibility script adds missing flat segment artifacts inside `out/`, preserves original files and rejects conflicting content. It is idempotent and leaves correct exports alone. No dependency or hosting changes.
+- Browser testing also exposed missing Georgian ICU support in Chromium. Explicit property-number formatting now matches server output; a regression test protects this.
+- Native German/Georgian review and fresh title/availability evidence remain outstanding research limitations, not verified facts. The NASP request is drafted only. No deployment or external correspondence was performed.
+
 ## Mobile layout correction, 7 September 2026
 
 - Chromium checks cover all 57 routes in English, German and Georgian at 320, 360, 390, 412 and 768px: 285 viewport checks and 570 closed/expanded states. Every state satisfies `document.documentElement.scrollWidth === document.documentElement.clientWidth`; no clipped cards, multi-column card/input groups or undersized form controls were detected.

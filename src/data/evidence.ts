@@ -1,4 +1,60 @@
 import type { Evidence, Source } from "@/types/evidence";
+import { identities, auditIdentityMapping } from "./property-identities";
+import { date, RESEARCH_AS_OF, text3 } from "./research-helpers";
 
-export const sources: readonly Source[] = [];
-export const evidence: readonly Evidence[] = [];
+function source(id: string, title: string, publisher: string, url: string | null, published: string | null, sourceType: Source["sourceType"], language = "ka", accessResult: Source["accessResult"] = "retrieved"): Source {
+  return { id, title, publisher, url, publishedAt: published ? date(published) : null, accessedAt: date(RESEARCH_AS_OF), sourceType, language, accessResult,
+    documentPath: id === "audit-2026" ? "research/sources/2026-09-06-integrated-audit.md" : null };
+}
+export const sources: readonly Source[] = [
+  source("inventory-2021", "Historic inventory and privatization investigation", "Mtis Ambebi", "https://mtisambebi.ge/news/business/item/1364-ratom-ver-aybvavda-kurorti-xybaltubo", "2021-09-11", "reporting"),
+  source("program-2022", "New Life of Tskaltubo investment programme", "Ministry of Economy", "https://www.economy.ge/?lang=en&nw=1982&page=news", "2022-07-05", "official_announcement", "en"),
+  source("catalogue-2022", "New Life of Tskaltubo catalogue", "Ministry of Economy (linked catalogue)", "https://drive.google.com/file/d/1y3MQHmNAoN0GAj6-GO590dS5lFh1D6bH/view", null, "catalogue", "unknown", "not_retrieved"),
+  source("nasp-2024", "Imereti and Rkinigzeli conditional auctions", "NASP", "https://nasp.gov.ge/pages/show.php?postid=3577", "2024-06-11", "official_announcement"),
+  source("nasp-tskaltubo", "Sanatorium Tskaltubo sale announcement", "NASP", "https://nasp.gov.ge/pages/show.php?postid=3300", "2023-09-07", "official_announcement"),
+  source("sales-2023", "Three 2023 privatizations: buyers and obligations", "BMG", "https://bm.ge/news/sharshan-tsyaltuboshi-3-sanatoriumi-gaskhvisda-vin-ramdenad-da-ra-sainvestitsio-valdebulebit-iyida", "2024-01-22", "reporting"),
+  source("schedule-2025", "Eleven properties: reported prices and obligations", "BMG / agency-response reporting", "https://bm.ge/news/11-sanatoriumi-tsyaltuboshi-romelits-iyideba-fasi-da-sainvestitsio-valdebulebebi", "2025-09-24", "reporting"),
+  source("program-2025", "Programme sales and remaining offers", "BMG / agency-response reporting", "https://bm.ge/news/tsyaltubos-15-sanatoriumidan-gayidulia-4-dapirebis-miukhedavad-ivanishvils-artserti-ar-uyidia", "2025-09-23", "reporting"),
+  source("reversions-2026", "Sanatorium reversions and unfulfilled developments", "KutaisiPost", "https://www.kutaisipost.ge/ka/sazogadoeba/article/29965-san", "2026-06-17", "reporting"),
+  source("tbilisi-2026", "Hilton opening forecast from Aka Holding", "BMG", "https://bm.ge/en/news/hilton-to-open-in-tskaltubo-in-15-years-aka-holding", "2026-04-01", "reporting", "en"),
+  source("metalurgi-2026", "Global Lifestyle redevelopment plans", "Georgia Today", "https://georgiatoday.ge/from-historical-heritage-to-modern-hospitality-global-lifestyle-offers-a-new-tourism-development-model-for-georgia/", "2026-06-10", "reporting", "en"),
+  source("savane-2024", "Savane auction attracted no buyer", "Commersant", "https://commersant.ge/news/economic/tsyaltubos-sanatoriumi-savane-auqtsionze-ver-gaiyida", "2024-09-20", "reporting"),
+  source("security-2026", "2026 state-property security procurement", "BMG", "https://bm.ge/news/sakhelmtsifo-qonebis-mat-shoris-tsyaltubos-sanatoriumebis-datsva-biujets-2026-tsels-gel6-mln-daujdeba", "2025-12-05", "reporting"),
+  source("legends-tourism", "Legends Tskaltubo Spa Resort", "Georgian National Tourism Administration / Places", "https://places.georgia.travel/en/establishments/legends-tskaltubo-spa-resort", null, "operating_listing", "en"),
+  source("legends-resort", "Legends accommodation listing", "Tskaltubo Medical Wellness Resort", "https://tskaltuboresort.ge/eng/static/85/hotels", null, "operating_listing", "en"),
+  source("legends-booking", "Legends operating listing", "Booking.com", "https://www.booking.com/hotel/ge/tskaltubo-spa-resort.html", null, "operating_listing", "en", "blocked"),
+  source("metalurgi-july", "Global Lifestyle and Metalurgi: tourism commentary", "My Georgia Stay", "https://www.mygeorgiastay.com/from-soviet-sanatorium-to-five-star-global-lifestyle-bets-on-tskaltubos-second-act", "2026-07-13", "reporting", "en"),
+  source("catalogue-2023", "Investment Projects Catalogue 2023", "Enterprise Georgia", "https://www.enterprisegeorgia.gov.ge/files/1/Investment%20Porjects%20Catalogue%202023.pdf", "2023", "catalogue", "en", "not_retrieved"),
+  source("auction-imereti", "Historical auction 991936", "eAuction", "https://eauction.ge/Home/EntityView/991936", null, "official_announcement", "ka", "not_retrieved"),
+  source("auction-rkinigzeli", "Historical auction 991954", "eAuction", "https://eauction.ge/Home/EntityView/991954", null, "official_announcement", "ka", "not_retrieved"),
+  source("nasp-contact", "Agency contact directory", "NASP", "https://nasp.gov.ge/pages/?page_id=143", null, "official_announcement", "ka", "not_retrieved"),
+  source("municipal-auctions", "Municipal auction archive", "Tskaltubo Municipality", "https://tskaltubo.gov.ge/auqtsionebi/", null, "official_announcement"),
+  ...["real-estate", "business", "restrictions"].map(id => source(`registry-${id}`, `${id} registry service directory`, "NAPR", `https://napr.gov.ge/en/service/registers/${id}-register`, null, "registry_service", "en")),
+  source("audit-2026", "Retained eleven-property audit", "Project working document", null, "2026-09-06", "audit", "en", "retained"),
+];
+
+function claim(id: string, sourceId: string, propertyIds: readonly string[], effective: string | null, locator: string, en: string, de: string, ka: string, status: "reported" | "historical" | "unverified" = "reported"): Evidence {
+  const original = sources.find(s => s.id === sourceId)!;
+  return { id, sourceIds: [sourceId], propertyIds, effectiveAt: effective ? date(effective) : null, locator, claim: text3(en, de, ka), status,
+    category: original.sourceType === "official_announcement" ? "official" : "market", verifiedAt: null };
+}
+export const scheduleIds = ["megobroba", "savane", "intouristi", "philiali", "rkinigzeli", "imereti", "geologist", "gelati", "aia", "medea", "tsiskari"];
+export const evidence: readonly Evidence[] = [
+  ...identities.map(([id, name]) => claim(`${id}-identity`, "inventory-2021", [id], "2021-09-11", `Agency-supplied inventory; ${name}`, "Named historic property; parcel reconciliation remains open.", "Historisch benanntes Objekt; Parzellenabgleich noch offen.", "ისტორიულ სიაში დასახელებული ობიექტი; ნაკვეთების შეჯერება საჭიროა.")),
+  ...Object.keys(auditIdentityMapping).map(id => claim(`${id}-audit`, "audit-2026", [id], "2026-09-06", `§8.2 / ${id}`, "Audit shortlist and cadastral reference; underlying registry extract absent.", "Audit-Auswahlliste und Katasterreferenz; Registerauszug fehlt.", "აუდიტის მოკლე სია და საკადასტრო მითითება; რეესტრის ამონაწერი არ გვაქვს.", "unverified")),
+  ...scheduleIds.map((id, i) => claim(`${id}-schedule`, "schedule-2025", [id], "2025-09-24", `Numbered schedule, item ${i + 1}`, "Dated state offering and published terms; current availability unconfirmed.", "Datiertes staatliches Angebot und Bedingungen; heutige Verfügbarkeit unbestätigt.", "დათარიღებული სახელმწიფო შეთავაზება და პირობები; მიმდინარე ხელმისაწვდომობა დაუდასტურებელია.")),
+  ...["medea", "meshakhte", "tsiskari"].map(id => claim(`${id}-reversion`, "reversions-2026", [id], "2026-06-17", "Opening paragraphs and rehabilitation status", "Reported back in state ownership, awaiting rehabilitation.", "Laut Bericht wieder in Staatseigentum; Sanierung ausstehend.", "გავრცელებული ცნობით კვლავ სახელმწიფო საკუთრებაშია და რეაბილიტაციას ელის.")),
+  claim("medea-sale", "reversions-2026", ["medea"], "2022-08", "Opening ownership history", "Historic sale to Asi Group Hotels Georgia.", "Historischer Verkauf an Asi Group Hotels Georgia.", "ისტორიული გაყიდვა Asi Group Hotels Georgia-ზე."),
+  claim("medea-return-date", "reversions-2026", ["medea"], "2024-01", "Opening ownership history", "Reported return to state ownership.", "Berichtete Rückkehr in Staatseigentum.", "გავრცელებული ცნობა სახელმწიფო საკუთრებაში დაბრუნების შესახებ."),
+  ...["rkinigzeli", "imereti"].map(id => claim(`${id}-auction`, "nasp-2024", [id], "2024-06-11", `${id} paragraph; original auction link`, "Conditional auction, address, land area and hotel obligations.", "Bedingte Auktion, Adresse, Grundstücksfläche und Hotelauflagen.", "პირობებიანი აუქციონი, მისამართი, მიწის ფართობი და სასტუმროს ვალდებულებები.", "historical")),
+  claim("tskaltubo-sale", "nasp-tskaltubo", ["tskaltubo-rustaveli-48"], "2023-09-07", "Opening two paragraphs", "Official sale to Golden Towers; hotel and catering obligations.", "Amtlicher Verkauf an Golden Towers; Hotel- und Gastronomieauflagen.", "ოფიციალური გაყიდვა Golden Towers-ზე; სასტუმროსა და კვების ობიექტების ვალდებულებები.", "historical"),
+  ...["tskaltubo-rustaveli-48", "ushishroeba", "samgurali"].map(id => claim(`${id}-sale-report`, "sales-2023", [id], "2023", `Named property subsection: ${id}`, "Reported transaction and buyer; present title and completion unverified.", "Berichteter Verkauf und Käufer; heutiger Titel und Fertigstellung unbestätigt.", "გავრცელებული გარიგება და მყიდველი; მიმდინარე საკუთრება და დასრულება დაუდასტურებელია.")),
+  claim("sinatle-state", "sales-2023", ["sinatle"], "2024-01-22", "Closing state-owned list", "Included in the reported state-owned portfolio.", "In der berichteten staatlichen Objektliste enthalten.", "შეტანილია გავრცელებულ სახელმწიფო საკუთრების სიაში."),
+  claim("tbilisi-works", "tbilisi-2026", ["tbilisi"], "2026-04-01", "Investor update, opening paragraphs", "Aka Holding reports facade and courtyard works; completion remains a forecast.", "Aka Holding berichtet über Fassaden- und Hofarbeiten; Fertigstellung bleibt Prognose.", "Aka Holding ფასადისა და ეზოს სამუშაოებზე საუბრობს; დასრულება კვლავ პროგნოზია."),
+  claim("tbilisi-sale", "tbilisi-2026", ["tbilisi"], "2022-08", "Final project-background paragraph", "Reported purchase by Aka Holding with hotel obligations.", "Berichteter Erwerb durch Aka Holding mit Hotelauflagen.", "გავრცელებული შეძენა Aka Holding-ის მიერ სასტუმროს ვალდებულებებით."),
+  claim("metalurgi-preparation", "metalurgi-2026", ["metalurgi"], "2026-06-10", "Tskaltubo project paragraphs", "Global Lifestyle preparation and vacancy reported; hotel operation not established.", "Global Lifestyle: Vorbereitung und Leerstand berichtet; Hotelbetrieb nicht belegt.", "Global Lifestyle-ის მომზადება და შენობის დაცლაა აღწერილი; სასტუმროს მუშაობა დაუდასტურებელია."),
+  claim("legends-operation", "legends-tourism", ["legends"], null, "About; hotel listing", "Undated accommodation listing; not a whole-complex condition survey.", "Undatiertes Unterkunftsverzeichnis; keine Zustandsprüfung des gesamten Komplexes.", "უთარიღო განთავსების ჩანაწერი; არ წარმოადგენს მთელი კომპლექსის მდგომარეობის შეფასებას."),
+  claim("savane-failed", "savane-2024", ["savane"], "2024-09-20", "Opening and auction conditions (b)–(c)", "Failed auction and then-published hotel investment terms.", "Erfolglose Auktion und damalige Hotelinvestitionsbedingungen.", "უშედეგო აუქციონი და იმ დროს გამოქვეყნებული სასტუმროს საინვესტიციო პირობები."),
+  claim("megobroba-use", "program-2025", ["megobroba"], "2025-09-23", "Megobroba paragraph", "Diagnostic and rehabilitation centre use was reported.", "Diagnostik- und Rehabilitationszentrum als Nutzung berichtet.", "გავრცელებულია დიაგნოსტიკური და სარეაბილიტაციო ცენტრის დანიშნულება."),
+  ...[["iveria", "2018-03-06"], ["meshakhte", "2015-07-20"], ["rioni", "2020-11"], ["sakartvelo", "2021-09-11"], ["metalurgi", "2012-08-07"], ["tsiskari", "2016-06-23"]].map(([id, at]) => claim(`${id}-historic`, "inventory-2021", [id!], at!, `Property-specific transaction / ownership paragraph: ${id}`, "Historical private ownership or disposal; no current seller authority established.", "Historisches Privateigentum oder Veräußerung; heutige Verkaufsbefugnis nicht belegt.", "ისტორიული კერძო საკუთრება ან გასხვისება; მიმდინარე გაყიდვის უფლებამოსილება დაუდგენელია.")),
+];

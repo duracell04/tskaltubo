@@ -18,6 +18,9 @@ export interface Source {
   documentPath: string | null;
   publishedAt: ResearchDate | null;
   accessedAt: ResearchDate | null;
+  language: string;
+  sourceType: "official_announcement" | "reporting" | "registry_service" | "registry_extract" | "operating_listing" | "audit" | "catalogue";
+  accessResult: "retrieved" | "blocked" | "not_retrieved" | "retained";
 }
 
 interface EvidenceBase {
@@ -27,6 +30,8 @@ interface EvidenceBase {
   effectiveAt: ResearchDate | null;
   /** Page, section or other locator supporting the claim. */
   locator: string | null;
+  claim: Readonly<Record<"en" | "de" | "ka", string>>;
+  propertyIds: readonly string[];
 }
 
 export type Evidence = EvidenceBase &

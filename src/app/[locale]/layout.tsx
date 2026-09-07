@@ -9,6 +9,7 @@ import {
 } from "@/lib/locale";
 import { copy as memoCopy } from "@/lib/copy";
 import { projectName } from "@/lib/research-data";
+import { propertyCopy } from "@/lib/property-copy";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
@@ -37,17 +38,17 @@ export default async function LocaleLayout({
       <Header locale={locale} />
       <main id="main-content" tabIndex={-1} className="container main-content">
         {locale !== "en" ? (
-          <aside className="translation-notice">{c.original}</aside>
+          <details className="translation-notice"><summary>{propertyCopy(locale).translationSummary}</summary>{propertyCopy(locale).translation}</details>
         ) : null}
         {children}
       </main>
       <footer className="site-footer">
         <div className="container">
-          <p>{c.footer}</p>
+            <p>{propertyCopy(locale).footer}</p>
           <a href={`/${locale}/methodology`}>{c.methodology}</a>
           <span> · </span>
           <a href="/data/research.json" download>
-            Export public data
+            {propertyCopy(locale).historicalLibrary} · JSON
           </a>
         </div>
       </footer>

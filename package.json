@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "node scripts/fix-static-segments.mjs",
     "start": "node scripts/serve-static.mjs",
     "typecheck": "next typegen && tsc --noEmit",
     "lint": "eslint .",
