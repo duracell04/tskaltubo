@@ -263,7 +263,7 @@ export function CompareExplorer({
           </label>
         ))}
       </fieldset>
-      <div className="table-scroll">
+      <div className="table-scroll" role="region" aria-label={copy(locale).compare} tabIndex={0}>
         <table>
           <caption>
             {kind === "concept"

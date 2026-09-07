@@ -782,7 +782,7 @@ function Calculator({
                   </div>
                 ))}
               </figure>
-              <div className="table-scroll">
+              <div className="table-scroll" role="region" aria-label="Annual cash flow table" tabIndex={0}>
                 <table>
                   <caption>
                     Annual worksheet · all monetary values EUR; unknown inputs

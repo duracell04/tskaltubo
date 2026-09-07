@@ -1,5 +1,15 @@
 # Static memo verification
 
+## Mobile layout correction, 7 September 2026
+
+- Chromium checks cover all 57 routes in English, German and Georgian at 320, 360, 390, 412 and 768px: 285 viewport checks and 570 closed/expanded states. Every state satisfies `document.documentElement.scrollWidth === document.documentElement.clientWidth`; no clipped cards, multi-column card/input groups or undersized form controls were detected.
+- Native menu keyboard activation, visible focus, active-page indication, closing after navigation, and language switching with the current route/query/fragment were verified. Calculator renovation edits change results without changing the report reference; reset restores the baseline. Wide tables scroll independently with the keyboard.
+- Full-page desktop overview screenshots at 1280px and 1440px are pixel-identical before and after the correction. Phone screenshots cover Overview, Intouristi property detail and Calculator in all three locales.
+- Financial table cells retain normal word wrapping so amounts remain readable inside their horizontal scroll container. A separate final table check covers comparison, calculator and appendix in all three locales at all five widths.
+- Evidence is saved under the ignored `.verification/mobile/` directory: browser matrices, interaction results, desktop comparison and screenshots. Production deployment identity and hosted checks belong to the release report; these local results alone do not certify deployment.
+
+## Static simplification
+
 Refactor verification, 6 September 2026.
 
 - Full prototype archived at `archive/full-workspace-prototype` (`b6eb5f2`); secrets and provider state excluded.

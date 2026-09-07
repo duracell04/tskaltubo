@@ -11,7 +11,7 @@ export function RichText({ children }: { children: string }) {
         remarkPlugins={[remarkGfm]}
         components={{
           table: ({ children }) => (
-            <div className="table-scroll">
+            <div className="table-scroll" role="region" aria-label="Research table" tabIndex={0}>
               <table>{children}</table>
             </div>
           ),

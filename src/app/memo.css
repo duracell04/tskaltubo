@@ -1173,168 +1173,6 @@ details[open] > summary {
     grid-template-columns: repeat(3, 1fr);
   }
 }
-@media (max-width: 800px) {
-  .navigation-row {
-    align-items: stretch;
-    flex-direction: column;
-  }
-  .main-navigation {
-    overflow: auto;
-    gap: 1.2rem;
-    flex-wrap: nowrap;
-  }
-  .language-navigation {
-    border: 0;
-    justify-content: end;
-  }
-  .language-navigation a {
-    min-height: 32px;
-    padding: 0;
-  }
-  .header-status {
-    display: none;
-  }
-  .hero {
-    grid-template-columns: 1fr;
-  }
-  .hero-aside {
-    display: none;
-  }
-  .hero-copy {
-    padding: 2.2rem;
-  }
-  .hero h1 {
-    max-width: 17ch;
-  }
-  .stats-row {
-    grid-template-columns: 1fr 1fr;
-  }
-  .stats-row .stat:nth-child(3) {
-    border-left: 0;
-    border-top: 1px solid var(--border);
-  }
-  .stats-row .stat:nth-child(4) {
-    border-top: 1px solid var(--border);
-  }
-  .overview-grid,
-  .finance-layout,
-  .model-layout,
-  
-  .blocker-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .report-layout {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  .report-index {
-    position: static;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    max-height: none;
-  }
-  .gate-strip {
-    grid-template-columns: 1fr 1fr;
-  }
-  .partner-banner {
-    padding: 1.5rem;
-    align-items: start;
-    flex-direction: column;
-  }
-  .auth-panel {
-    align-items: start;
-    flex-direction: column;
-  }
-  .page-heading {
-    margin-top: 1.4rem;
-  }
-  .main-content {
-    padding-top: 1rem;
-  }
-  .model-fields {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-@media (max-width: 520px) {
-  .container {
-    width: calc(100% - 2rem);
-  }
-  .brand {
-    font-size: 1.5rem;
-  }
-  .brand small {
-    font-size: 8px;
-  }
-  .hero-copy {
-    padding: 1.7rem;
-  }
-  .hero h1 {
-    font-size: 2.85rem;
-  }
-  .hero-actions {
-    gap: 1rem;
-  }
-  .hero p {
-    font-size: 0.85rem;
-  }
-  .stat strong {
-    font-size: 1.8rem;
-  }
-  .property-grid,
-  .concept-grid,
-  .gate-strip {
-    grid-template-columns: 1fr;
-  }
-  .panel,
-  .report-section {
-    padding: 1.2rem;
-  }
-  .capability-grid {
-    gap: 0.5rem;
-  }
-  .capability-grid > div {
-    padding: 0.6rem;
-    font-size: 0.67rem;
-    flex-direction: column;
-    gap: 0.3rem;
-  }
-  .toolbar {
-    align-items: stretch;
-  }
-  .toolbar > .button {
-    flex: 1;
-  }
-  .search-box {
-    min-width: 100%;
-  }
-  .input-grid,
-  .model-fields {
-    grid-template-columns: 1fr;
-  }
-  .result-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-  .result-grid .stat strong {
-    font-size: 1.5rem;
-  }
-  .section-heading > a {
-    white-space: normal;
-    text-align: right;
-    font-size: 0.67rem;
-  }
-  .readiness-list li {
-    font-size: 0.66rem;
-  }
-  .readiness-list strong {
-    font-size: 0.6rem;
-  }
-  .notice {
-    font-size: 0.75rem;
-  }
-  .month-inputs {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
 @media print {
   .site-header,
   .site-footer,
@@ -1550,27 +1388,6 @@ details[open] > summary {
 .calculator .stats-row {
   margin: 1.5rem 0;
 }
-@media (max-width: 600px) {
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-  .stats-row {
-    grid-template-columns: 1fr 1fr;
-  }
-  .secondary-navigation {
-    gap: 1rem;
-  }
-  .calculator .toolbar {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-  .cash-row {
-    grid-template-columns: 50px 1fr 105px;
-  }
-  .cash-row strong {
-    font-size: 0.75rem;
-  }
-}
 @media print {
   .secondary-navigation,
   button {
@@ -1600,4 +1417,226 @@ details[open] > summary {
   }
 }
 
-.live-summary{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:1rem;background:#183b2e;color:white;border-radius:5px;margin:1.5rem 0}.live-summary span{font-size:.8rem}.live-summary strong{display:block;font-size:1.1rem}@media print{.live-summary{position:static}}@media(max-width:600px){.live-summary{position:static;display:grid;grid-template-columns:1fr 1fr}}
+.live-summary{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:1rem;background:#183b2e;color:white;border-radius:5px;margin:1.5rem 0}.live-summary span{font-size:.8rem}.live-summary strong{display:block;font-size:1.1rem}@media print{.live-summary{position:static}}
+
+.mobile-navigation {
+  display: none;
+}
+
+/* Keep the memo in one readable column, including tablet portrait widths. */
+@media screen and (max-width: 800px) {
+  .container {
+    width: calc(100% - 2rem);
+  }
+  .site-header {
+    padding-block: 0.75rem;
+  }
+  .site-header .brand-row,
+  .desktop-navigation {
+    display: none;
+  }
+  .mobile-navigation {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 64px 80px;
+    column-gap: 0.5rem;
+    align-items: start;
+  }
+  .mobile-brand {
+    grid-area: 1 / 1;
+    z-index: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    font: 1.5rem Georgia, serif;
+    letter-spacing: -0.035em;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .mobile-language {
+    grid-area: 1 / 2;
+    z-index: 1;
+    margin: 0;
+  }
+  .mobile-language select {
+    padding: 0.5rem 0.25rem;
+  }
+  /* The summary shares the top row; expanded links grow the header normally. */
+  .mobile-menu {
+    grid-area: 1 / 1 / auto / -1;
+    min-width: 0;
+  }
+  .mobile-menu > summary {
+    width: 80px;
+    min-height: 44px;
+    margin: 0 0 0 auto;
+    padding: 0.5rem 0.25rem;
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  .mobile-menu nav {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.75rem;
+    border-top: 1px solid var(--border);
+  }
+  .mobile-menu nav a {
+    padding: 0.75rem;
+    min-height: 44px;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .mobile-menu a[aria-current="page"] {
+    background: #eef0e5;
+    font-weight: 600;
+  }
+  .main-content {
+    padding-top: 1rem;
+    overflow-wrap: anywhere;
+  }
+  .main-content :where(section, article, div, label, fieldset, figure) {
+    min-width: 0;
+  }
+  .hero,
+  .overview-grid,
+  .property-grid,
+  .concept-grid,
+  .blocker-grid,
+  .gate-strip,
+  .report-layout,
+  .report-index,
+  .finance-layout,
+  .model-layout,
+  .model-fields,
+  .input-grid,
+  .form-grid,
+  .year-fields,
+  .month-inputs,
+  .stats-row,
+  .result-grid,
+  .asset-metrics,
+  .service-list > div,
+  .capability-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .overview-grid {
+    gap: 0;
+  }
+  .hero-aside {
+    display: none;
+  }
+  .hero-copy,
+  .panel,
+  .property-card,
+  .concept-card,
+  .report-section,
+  .issue,
+  .partner-banner,
+  .advanced-inputs {
+    padding: 1.25rem;
+  }
+  .hero h1 {
+    max-width: 17ch;
+  }
+  .hero-actions {
+    gap: 1rem;
+  }
+  .page-heading,
+  .section-heading,
+  .partner-banner,
+  .auth-panel {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .page-heading {
+    margin-top: 1.4rem;
+  }
+  .section-heading > a,
+  .readiness-list strong {
+    white-space: normal;
+  }
+  .readiness-list li,
+  .property-top,
+  .card-kicker,
+  .card-links,
+  .issue > div:first-child,
+  .chart-row > div:first-child {
+    flex-wrap: wrap;
+  }
+  .readiness-list strong {
+    margin-left: 0;
+  }
+  .stats-row .stat + .stat,
+  .result-grid .stat + .stat {
+    border: 0;
+    border-top: 1px solid var(--border);
+  }
+  .result-grid .stat:nth-child(odd) {
+    border-right: 0;
+  }
+  .report-layout {
+    gap: 1rem;
+  }
+  .report-index {
+    position: static;
+    display: grid;
+    max-height: none;
+  }
+  .toolbar,
+  .calculator .toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+  }
+  .toolbar > *,
+  .schedule .toolbar label {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+  input,
+  select,
+  textarea,
+  .month-inputs input {
+    min-width: 0;
+    max-width: 100%;
+    min-height: 44px;
+    font-size: 1rem;
+  }
+  input[type="checkbox"] {
+    min-height: 18px;
+    flex-shrink: 0;
+  }
+  .live-summary {
+    position: static;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cash-chart {
+    margin-inline: 0;
+  }
+  .cash-row {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .cash-row strong {
+    grid-area: 1 / 2;
+  }
+  .cash-row .chart-track {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  .table-scroll {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .table-scroll table {
+    overflow-wrap: normal;
+  }
+  .worksheet-results td {
+    white-space: nowrap;
+  }
+}

@@ -1,6 +1,8 @@
 import type { Locale } from "./constants";
 export const ui = {
   en: {
+    menu: "Menu",
+    language: "Language",
     overview: "Overview",
     scenarios: "Business concepts",
     sanatoriums: "Properties",
@@ -40,6 +42,8 @@ export const ui = {
       "Tskaltubo Senior Living & Care Development · Pre-feasibility only. Facts, assumptions and unresolved questions are kept separate.",
   },
   de: {
+    menu: "Menü",
+    language: "Sprache",
     overview: "Überblick",
     scenarios: "Betriebskonzepte",
     sanatoriums: "Immobilien",
@@ -79,6 +83,8 @@ export const ui = {
       "Tskaltubo Senior Living & Care Development · Vorprüfung. Tatsachen, Annahmen und offene Fragen werden getrennt ausgewiesen.",
   },
   ka: {
+    menu: "მენიუ",
+    language: "ენა",
     overview: "მიმოხილვა",
     scenarios: "ოპერაციული მოდელები",
     sanatoriums: "ქონება",
